@@ -9,7 +9,8 @@ TagManager:
   - MediumFella
   - FInish
   - SlimeChild
-  - BrokenWall
+  - MovableBox
+  - PressurePlate
   layers:
   - Default
   - TransparentFX
