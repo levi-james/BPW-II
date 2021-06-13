@@ -11,6 +11,9 @@ TagManager:
   - SlimeChild
   - MovableBox
   - PressurePlate
+  - Potion
+  - EatCollider
+  - Music
   layers:
   - Default
   - TransparentFX
@@ -20,7 +23,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Pushable
   - 
   - 
   - 
