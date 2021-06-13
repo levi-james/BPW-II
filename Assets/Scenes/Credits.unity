@@ -276,8 +276,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "<color=\"#63AE2A\">Concept Art:</color> Lobotomised\nwww.lobotomised.deviantart.com\n\n<color=\"#63AE2A\">Sound
-    effects:</color>\n\nGate_Open_00.wav by LittleRobotSoundFactory\nhttps://freesound.org/people/LittleRobotSoundFactory/sounds/270461/\n\n060
+  m_Text: "<color=\"#63AE2A\">Concept Art:</color> Lobotomised\nwww.lobotomised.deviantart.com\n\n<color=\"#63AE2A\">SFX:</color>\nGate_Open_00.wav
+    by LittleRobotSoundFactory\nhttps://freesound.org/people/LittleRobotSoundFactory/sounds/270461/\n\n060
     Gas Fire Monster \nZero-G Ghost in the Machine\n"
 --- !u!222 &738381439
 CanvasRenderer:

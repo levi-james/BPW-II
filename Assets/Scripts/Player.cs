@@ -9,7 +9,6 @@ using Random = UnityEngine.Random;
 public class Player : MonoBehaviour
 {
     PlayerStates states;
-    MouseLook mouseLook;
 
     //walking speeds
     [SerializeField] float smolSpeed;
@@ -37,7 +36,8 @@ public class Player : MonoBehaviour
     GameObject menu;
     bool isInMenu = false;
     string previousState;
-    //
+
+    //verschillende hands 
     [SerializeField] GameObject BigVision;
     [SerializeField] GameObject MediumVision;
     [SerializeField] GameObject SmolVision;
@@ -59,14 +59,13 @@ public class Player : MonoBehaviour
     bool isRoarPlaying;
     bool isPushSoundPlaying;
 
-    //gravityyy
+    //gravity idk
     Vector3 velocity;
     [SerializeField] float gravity = -9.81f;
 
     private void Start()
     {
         states = GetComponent<PlayerStates>();
-        mouseLook = GameObject.FindWithTag("MainCamera").GetComponent<MouseLook>();
 
         playerObj = GameObject.Find("Player").GetComponent<Transform>();
         slimeChild = GameObject.Find("SlimeChild");
@@ -82,9 +81,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         Restart();
-        //Sound();
 
-        //http s://forum.unity.com/threads/saving-loading-enum-states.416476/
+
         if (Input.GetKeyDown(KeyCode.Escape) && !isInMenu)
         {
             previousState = states.currentState.ToString();
@@ -97,7 +95,7 @@ public class Player : MonoBehaviour
             states.currentState = (PlayerStates.PlayerMonsterStates)System.Enum.Parse(typeof(PlayerStates.PlayerMonsterStates), previousState);
         }
 
-        DebugMonsters();
+        //DebugMonsters();
     }
 
     void ShowMenu()
@@ -115,39 +113,6 @@ public class Player : MonoBehaviour
         isInMenu = false;
     }
 
-    void DebugMonsters()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            states.currentState = PlayerStates.PlayerMonsterStates.Smol;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            states.currentState = PlayerStates.PlayerMonsterStates.Medium;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            states.currentState = PlayerStates.PlayerMonsterStates.Big;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            states.currentState = PlayerStates.PlayerMonsterStates.GrownMedium;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            states.currentState = PlayerStates.PlayerMonsterStates.Dead;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            StartCoroutine(GoToNextLevel());
-        }
-
-    }
     public void Move()
     {
         float x = Input.GetAxis("Horizontal");
@@ -162,40 +127,7 @@ public class Player : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
         
     }
-    
-    void Sound()
-    {
-        if(Input.GetKeyDown(KeyCode.W) && states.currentState == PlayerStates.PlayerMonsterStates.Smol)
-        {
-            
-            Small_footstep.pitch = Random.Range(0, 3);
-            Small_footstep.Play();
-        }
-       
-
-        if (Input.GetKeyDown(KeyCode.W) && states.currentState == PlayerStates.PlayerMonsterStates.Big)
-        {
-            
-            Big_footstep.pitch = Random.Range(1, 3);
-            Big_footstep.Play();
-        }
-       
-
-        if (Input.GetKeyDown(KeyCode.W) && states.currentState == PlayerStates.PlayerMonsterStates.Medium)
-        {
-            
-            Medium_footstep.pitch = Random.Range(0, 3);
-            Medium_footstep.Play();
-        }
-      
-
-        if (Input.GetKeyDown(KeyCode.W) && states.currentState == PlayerStates.PlayerMonsterStates.GrownMedium)
-        {
-            Medium_footstep.pitch = Random.Range(0, 3);
-            Medium_footstep.Play();
-        }
-      
-    }
+    /*---------------------------SLIME ABILITY---------------------------*/
     public void CreateSlimeChild()
     {
 
@@ -207,12 +139,15 @@ public class Player : MonoBehaviour
         }
         
     }
-    
+
+    /*---------------------------POTION GROW ---------------------------*/
     public void Grow()
     {
         playerObj.transform.localScale = Vector3.Lerp(transform.localScale, growSize, 1 * Time.deltaTime);
     }
 
+
+    /*---------------------------ROAR RAYCAST ABILITY---------------------------*/
     public void Roar()
     {
         int layer = 1 << 8;
@@ -274,7 +209,7 @@ public class Player : MonoBehaviour
         
     }
 
-  
+    /*---------------------------VERY MESSY EATING ABILITY---------------------------*/
     private void OnTriggerEnter(Collider other)
     {
         //finishing a level teleports you to the next one
@@ -339,7 +274,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    //ht tps://docs.unity3d.com/ScriptReference/CharacterController.OnControllerColliderHit.html?_ga=2.251409286.1855934843.1615121525-522815912.1603372675
+
+
+    /*---------------------------PUSHING ABILITY---------------------------*/
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if(hit.collider.CompareTag("MovableBox") && states.currentState == PlayerStates.PlayerMonsterStates.Big)
@@ -412,6 +349,8 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    /*---------------------------STATE FUNCTIONS---------------------------*/
     public void Smol()
     {
         playerObj.transform.localScale = new Vector3(1, 0.5f, 1);
@@ -455,17 +394,54 @@ public class Player : MonoBehaviour
 
 
     }
+    /*---------------------------OVERIGE FUNCTIONS---------------------------*/
     public IEnumerator GoToNextLevel()
     {
         yield return new WaitForSeconds(3);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
     }
+
+
     public void Restart()
     {
         if(Input.GetKeyDown(KeyCode.R))
         {
             Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
         }
+    }
+
+    void DebugMonsters()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            states.currentState = PlayerStates.PlayerMonsterStates.Smol;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            states.currentState = PlayerStates.PlayerMonsterStates.Medium;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            states.currentState = PlayerStates.PlayerMonsterStates.Big;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            states.currentState = PlayerStates.PlayerMonsterStates.GrownMedium;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            states.currentState = PlayerStates.PlayerMonsterStates.Dead;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            StartCoroutine(GoToNextLevel());
+        }
+
     }
 }
