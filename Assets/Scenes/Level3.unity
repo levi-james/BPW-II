@@ -4108,7 +4108,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bce1e24d7ad2aa742ab35c84f11a8258, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 49d535223885c6e429a16a63fdfb7c9d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4808,6 +4808,10 @@ PrefabInstance:
     - target: {fileID: 823358666524803589, guid: caf078ad4ee840940b0dd0d163051436, type: 3}
       propertyPath: m_Name
       value: Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 823358666524803589, guid: caf078ad4ee840940b0dd0d163051436, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 823358666524803593, guid: caf078ad4ee840940b0dd0d163051436, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12060,7 +12064,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.653862, y: -44.994812}
+  m_AnchoredPosition: {x: 38.065666, y: -44.994812}
   m_SizeDelta: {x: 1000, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1238387563
@@ -12096,7 +12100,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Great job!
+  m_Text: ...
 --- !u!222 &1238387564
 CanvasRenderer:
   m_ObjectHideFlags: 0

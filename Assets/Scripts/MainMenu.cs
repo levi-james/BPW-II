@@ -7,6 +7,26 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        
+    }
+
+    private void Update()
+    {
+        Scene sceneLoaded = SceneManager.GetActiveScene();
+
+        if(sceneLoaded.name == "End")
+        {
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
+        }
+
+        Quit();
+
+
     }
     public void StartGame()
     {
@@ -21,5 +41,13 @@ public class MainMenu : MonoBehaviour
     public void Menu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Quit()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 }

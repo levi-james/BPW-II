@@ -56,8 +56,11 @@ public class Player : MonoBehaviour
     [SerializeField] AudioSource Big_footstep;
     [SerializeField] AudioSource grow;
     [SerializeField] AudioSource pushBox;
+    [SerializeField] AudioSource winSound;
+    [SerializeField] AudioSource deadSound;
     bool isRoarPlaying;
     bool isPushSoundPlaying;
+    bool isDeadSoundPlaying;
 
     //gravity idk
     Vector3 velocity;
@@ -76,28 +79,31 @@ public class Player : MonoBehaviour
 
         winCanvas.SetActive(false);
         menu.SetActive(false);
-        
+
     }
     void Update()
     {
         Restart();
+        Menu();
+       
+        //DebugMonsters();
+    }
 
-
+    void Menu()
+    {
         if (Input.GetKeyDown(KeyCode.Escape) && !isInMenu)
         {
             previousState = states.currentState.ToString();
             Debug.Log("state saved = " + previousState);
             ShowMenu();
         }
-        else if(Input.GetKeyDown(KeyCode.Escape) && isInMenu)
+        else if (Input.GetKeyDown(KeyCode.Escape) && isInMenu)
         {
             HideMenu();
             states.currentState = (PlayerStates.PlayerMonsterStates)System.Enum.Parse(typeof(PlayerStates.PlayerMonsterStates), previousState);
         }
 
-        //DebugMonsters();
     }
-
     void ShowMenu()
     {
         Cursor.visible = true;
@@ -133,11 +139,14 @@ public class Player : MonoBehaviour
 
         if (slimeChildrenInScene < 1 && Input.GetMouseButtonDown(0))
         {
-            GameObject instance = Instantiate(slimeChild, childPos.transform.position, Quaternion.identity);
+            Instantiate(slimeChild, childPos.transform.position, Quaternion.identity);
             slimeChildrenInScene++;
             Medium_footstep.Play();
+
+            
+            
         }
-        
+
     }
 
     /*---------------------------POTION GROW ---------------------------*/
@@ -215,6 +224,7 @@ public class Player : MonoBehaviour
         //finishing a level teleports you to the next one
         if(other.CompareTag("Finish"))
         {
+            winSound.Play();
             states.currentState = PlayerStates.PlayerMonsterStates.Cutscene;
             winCanvas.SetActive(true);
             StartCoroutine(GoToNextLevel());
@@ -237,8 +247,9 @@ public class Player : MonoBehaviour
 
         if (other.CompareTag("MediumFella") && states.currentState == PlayerStates.PlayerMonsterStates.Big)
         {
-            Destroy(other.gameObject);
             chomp.Play();
+
+            Destroy(other.gameObject);
             states.currentState = PlayerStates.PlayerMonsterStates.Medium;
         }
 
@@ -364,6 +375,7 @@ public class Player : MonoBehaviour
 
     public void Medium()
     {
+        
         playerObj.transform.localScale = new Vector3(1.5f, 3, 1.5f);
         
         SmolVision.SetActive(false);
@@ -385,13 +397,25 @@ public class Player : MonoBehaviour
 
     public void Dead()
     {
+        
         mainCam.SetActive(false);
         smokeAnim.SetBool("isDead", true);
+        if (deadSound.isPlaying)
+        {
+            isDeadSoundPlaying = true;
+        }
+
+        if(!isDeadSoundPlaying)
+        {
+            deadSound.Play();
+        }
+
+        
         deadCam.SetActive(true);
         handsCanvas.SetActive(false);
         
         GetComponent<MeshRenderer>().enabled = false;
-
+        
 
     }
     /*---------------------------OVERIGE FUNCTIONS---------------------------*/

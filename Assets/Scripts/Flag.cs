@@ -6,6 +6,7 @@ public class Flag : MonoBehaviour
 {
     PlayerStates states;
     [SerializeField] GameObject winCanvas;
+    [SerializeField] AudioSource winSound;
 
     private void Start()
     {
@@ -17,6 +18,7 @@ public class Flag : MonoBehaviour
     {
         if(other.CompareTag("LilFella"))
         {
+            winSound.Play();
             states.currentState = PlayerStates.PlayerMonsterStates.Cutscene;
             winCanvas.SetActive(true);
             StartCoroutine(GoToNextLevel());
